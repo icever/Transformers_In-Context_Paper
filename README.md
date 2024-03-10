@@ -6,12 +6,12 @@
 <details>
 <summary>Q1</summary>
 
-![image](./gpt_in_context_01.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/9bc8d4f6-8f78-42c4-95a8-adc24db5904d")    
 
 <details>
 <summary>Q1_Answer</summary>
 
-![image](./gpt_in_context_01_ans.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/5eb2570b-41da-4ad8-9ec9-bcc9b7a3b015")    
 </details>    
 
 </details>    
@@ -19,12 +19,12 @@
 <details>
 <summary>Q2</summary>  
 
-![image](./gpt_in_context_02.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/7d8aafa4-61ab-440c-b8ce-71d561f7c31b")    
 
 <details>
 <summary>Q2_Answer</summary>
 
-![image](./gpt_in_context_02_ans.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/cec645ee-cd90-4f7f-b80e-9aeaf49fe183")    
 </details>    
 
 </details>    
@@ -91,14 +91,14 @@ $$ \mathbb{E}_P [ \ell ( M(P), f(x_{\text{query}}) ) ] ≤ \epsilon $$
 
 ## Training
 
-![image](./training.png)
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/fe9690c3-ffab-4c7f-b418-9da6521db889")
 
 The training process described for the Transformer model to enable it to perform in-context learning can be explained through the following points:
 
 - **Training Regime**:
     
     GPT-2 family architectures
-    ![image](./gpt2_models.png)
+    ![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/1ad00c42-eadc-4081-b79d-d7530ba27c12")
 
     In this research, the GPT-2 architecture is used as a starting point for training from scratch, meaning that no pre-training on language data or fine-tuning of pre-existing models is done. The focus is solely on the ability to learn function mappings in-context.
 
@@ -213,7 +213,7 @@ Procedure:
 
 The Transformer successfully approximates linear functions through in-context learning, emphasizing the precision of its approximations both globally (across different scales of query input) and locally (in terms of directional accuracy).
 
-![image](./linear_regression_01.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/e31255e8-293e-40ba-bdaa-5caeb115f035")    
 
 - **Robustness in Varied Scenarios**:
 
@@ -224,7 +224,7 @@ The Transformer successfully approximates linear functions through in-context le
   - **Prompt Scaling**: Shows relative robustness to changes in the scale of inputs or weights, highlighting the model's capability to handle variations in data magnitude.
   - **Orthant and Orthogonal Mismatches**: Successfully approximates linear functions even when in-context and query inputs lie in different spaces, underscoring its ability to generalize across spatial discrepancies.
 
-![image](./linear_regression_02.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/e2194b95-52a5-4265-8635-aa3692217e92")    
 
 
 ### Complex Functions
@@ -235,7 +235,7 @@ The Transformer successfully approximates linear functions through in-context le
 
 - **Two-Layer ReLU Neural Networks**: The Transformer shows comparable error rates to a baseline two-layer neural network trained on in-context examples using gradient descent. Moreover, the Transformer can in-context learn linear functions, demonstrating versatility and the ability to generalize across function classes.
 
-![image](./complex_functions.png)
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/73a5f5db-16a7-4d62-b06f-fef7ef773650")
 
 ### Model Capacity and Problem Dimension
 
@@ -245,7 +245,7 @@ The Transformer successfully approximates linear functions through in-context le
 
 - **Performance Across Different Distributions**: The models show improved error rates with 2d in-context examples across both in-distribution and out-of-distribution prompts. This finding emphasizes the value of model capacity not just for familiar tasks but also for adapting to new challenges.
 
-![image](./model_capacity_input_dimension.png)    
+![image]("https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/7fd20b91-4b14-47c9-9ddd-c4cf8e88eeff")    
 
 ## Code Demo
 A section providing sample code or a demonstration of the Transformer model tackling a simple function class. This could include a Jupyter notebook or a script that one can execute to see the model in action.
