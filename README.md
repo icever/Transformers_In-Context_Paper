@@ -47,43 +47,43 @@
 
 ## Formal Approach for In-Context Learning
 
-$$\mathbb{E}_P [ \ell ( M(P), f(x_{\text{query}}) ) ] ≤ \epsilon$$ 
+$$\mathbb{E}_P[\ell(M(P),f(x_{\text{query}}))]≤\epsilon$$ 
 
 - **Function Class**: 
 
     The paper defines a model's capability to in-context learn a function class $F$ as its ability to predict outputs for new queries based on a series of in-context examples. This approach is crucial for assessing a model's adaptability and learning efficiency.
 
-    Using 20-dimentional inputs $ \mathbf{x} $, we will discuss the 4 function  classes as follows.
+    Using 20-dimentional inputs $\mathbf{x}$, we will discuss the 4 function  classes as follows.
 
     - **Linear Function**
 
-        - $ f(\mathbf{x}) = w_1x_1 + w_2x_2 + ... + w_{20}x_{20} + b $ (21 parameters)
+        - $f(\mathbf{x})=w_1x_1+w_2x_2+...+w_{20}x_{20}+b$ (21 parameters)
     - **3-Sparse Linear Function**
 
-        - $ f(\mathbf{x}) = w_2x_2 + w_5x_5 + w_{20}x_{20} $ (3 parameters)
+        - $f(\mathbf{x})=w_2x_2+w_5x_5+w_{20}x_{20}$ (3 parameters)
 
     - **Two-Layer ReLU Neural Networks with 100 Hidden Units**
 
-        - $ f(\mathbf{x}) = \mathbf{W}_2^\top(\text{ReLU}(\mathbf{W}_1\mathbf{x} + \mathbf{b}_1)) + b_2 $ (Assuming a single output unit, 2201 parameters - 20*100 + 100 + 100 +1)
+        - $f(\mathbf{x})=\mathbf{W}_2^\top(\text{ReLU}(\mathbf{W}_1\mathbf{x}+\mathbf{b}_1))+b_2$ (Assuming a single output unit, 2201 parameters - 20*100 + 100 + 100 +1)
 
     - **Decision Tree of Depth 4**
-        - $ f(\mathbf{x}) $ is a series of if-else conditions upto 15 decisions.
+        - $f(\mathbf{x})$ is a series of if-else conditions upto 15 decisions.
         - Example:
-            - If $ x_1 > \text{threshold}_1 $:
-                - If $ x_2 > \text{threshold}_2 $: Return Class A
+            - If $x_1>\text{threshold}_1$:
+                - If $x_2>\text{threshold}_2$: Return Class A
                 - Else: Return Class B
             - Else:
-                - If $ x_2 > \text{threshold}_3 $: Return Class C
+                - If $x_2>\text{threshold}_3$: Return Class C
                 - Else: Return Class D    
 
 - **Prompt Structure and Learning Process**: 
 
     A prompt consists of input-output pairs derived from functions in $F$ and a new query input. These inputs are independently drawn from a distribution over inputs ($D_X$), and the function is chosen from a distribution over functions ($D_F$). This setup simulates how models encounter and process new information.
 
-    - Input and Function Distribution ($D_X$ and $D_F$) follows multivariate isotropic Gaussian distribution $ N(0, I_d) $.
-        - $ N $ denotes the Gaussian or normal distribution.
-        - $ 0 $ represents the mean vector, which, in this case, is a vector of zeros. The length of this vector matches the number of dimensions $ d $.
-        - $ I_d $ is the identity matrix of size $ d \times d $. An identity matrix is a square matrix with ones on the main diagonal and zeros elsewhere.
+    - Input and Function Distribution ($D_X$ and $D_F$) follows multivariate isotropic Gaussian distribution $N(0,I_d)$.
+        - $N$ denotes the Gaussian or normal distribution.
+        - $0$ represents the mean vector, which, in this case, is a vector of zeros. The length of this vector matches the number of dimensions $d$.
+        - $I_d$ is the identity matrix of size $d\times{d}$. An identity matrix is a square matrix with ones on the main diagonal and zeros elsewhere.
 
 - **Formal Criteria for In-Context Learning**: 
 
@@ -108,18 +108,18 @@ The training process described for the Transformer model to enable it to perform
 
 - **Gradient Updates**: 
 
-    At each training step, the model parameters $ \theta $ are updated via gradient descent to reduce the loss. Batches of random prompts are used for each update, with the Adam optimizer often chosen for its efficiency and effectiveness.
+    At each training step, the model parameters $\theta$ are updated via gradient descent to reduce the loss. Batches of random prompts are used for each update, with the Adam optimizer often chosen for its efficiency and effectiveness.
 
 - **Hyperparameters**:
     
-    The model is trained for a significant number of steps (e.g., 500,000) with a standard batch size (e.g., 64), and uses a set learning rate (e.g., $ 10^{-4} $) for all function classes and models.
+    The model is trained for a significant number of steps (e.g., 500,000) with a standard batch size (e.g., 64), and uses a set learning rate (e.g., $10^{-4}$) for all function classes and models.
 
 - **Process**:
-    1. **Sampling Functions and Inputs**: The process begins by sampling random functions from a function class $ F $, according to a distribution $ D_F $. For each sampled function $ f $, a sequence of inputs $ x_1, ..., x_{k+1} $ is drawn from an input distribution $ D_X $. These inputs are then used to generate the corresponding outputs using the sampled function to create training prompts.
+    1. **Sampling Functions and Inputs**: The process begins by sampling random functions from a function class $F$, according to a distribution $D_F$. For each sampled function $f$, a sequence of inputs $x_1,...,x_{k+1}$ is drawn from an input distribution $D_X$. These inputs are then used to generate the corresponding outputs using the sampled function to create training prompts.
 
-    2. **Constructing Prompts**: A prompt $ P $ is constructed using the input-output pairs $ (x_1, f(x_1)), ..., (x_{k+1}, f(x_{k+1})) $. For linear functions, for instance, the inputs are drawn from an isotropic Gaussian distribution $ N(0, I_d) $, and the function is defined using a weight vector $ w $ also drawn from $ N(0, I_d) $ such that $ f(x) = w^\top x $.
+    2. **Constructing Prompts**: A prompt $P$ is constructed using the input-output pairs $(x_1,f(x_1)),...,(x_{k+1},f(x_{k+1}))$. For linear functions, for instance, the inputs are drawn from an isotropic Gaussian distribution $N(0,I_d)$, and the function is defined using a weight vector $w$ also drawn from $N(0,I_d)$ such that $f(x)=w^\top{x}$.
 
-    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $ x_i $ based on a set of preceding in-context examples. Specifically, for each input $ x_i $ within a prompt, the model uses the previous $ i $ input-output pairs as context to predict the output of $ x_{i+1} $.
+    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $x_i$ based on a set of preceding in-context examples. Specifically, for each input $ x_i $ within a prompt, the model uses the previous $i$ input-output pairs as context to predict the output of $x_{i+1}$.
 
 ## Pseudocode for In-Context Learning
 ```
