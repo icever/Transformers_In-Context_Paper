@@ -47,7 +47,9 @@
 
 ## Formal Approach for In-Context Learning
 
-$$ `\mathbb{E}_P [ \ell ( M(P), f(x_{\text{query}}) ) ] ≤ \epsilon` $$ 
+$$ 
+\mathbb{E}_P [ \ell ( M(P), f(x_{\text{query}}) ) ] ≤ \epsilon 
+$$ 
 
 - **Function Class**: 
 
