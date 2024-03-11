@@ -31,13 +31,14 @@
 
 ## In-Context Learning
 
-- **Input-Output Pairs within Prompt**:
-
-    The core of in-context learning involves leveraging input-output pairs provided within the prompt. These pairs exemplify the task at hand, allowing the model to infer the underlying pattern or function to apply to a new input query.
 
 - **Without Explicit Training, Output at Inference Time**:
 
     One of the distinctive features of in-context learning is its ability to adapt and generate outputs without any modifications to the model's parameters during inference. This means the model relies solely on the information provided in the prompt to perform the task, showing a form of learning and generalization that occurs without the traditional training process.
+  
+- **Input-Output Pairs within Prompt**:
+
+    The core of in-context learning involves leveraging input-output pairs provided within the prompt. These pairs exemplify the task at hand, allowing the model to infer the underlying pattern or function to apply to a new input query.
 
 ## Problems 
 
