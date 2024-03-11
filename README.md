@@ -121,7 +121,7 @@ The training process described for the Transformer model to enable it to perform
 
     2. **Constructing Prompts**: A prompt $P$ is constructed using the input-output pairs $(x_1,f(x_1)),...,(x_{k+1},f(x_{k+1}))$. For linear functions, for instance, the inputs are drawn from an isotropic Gaussian distribution $N(0,I_d)$, and the function is defined using a weight vector $w$ also drawn from $N(0,I_d)$ such that $f(x)=w^\top{x}$.
 
-    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $x_i$ based on a set of preceding in-context examples. Specifically, for each input $ x_i $ within a prompt, the model uses the previous $i$ input-output pairs as context to predict the output of $x_{i+1}$.
+    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $x_i$ based on a set of preceding in-context examples. Specifically, for each input $x_i$ within a prompt, the model uses the previous $i$ input-output pairs as context to predict the output of $x_{i+1}$.
 
 ## Pseudocode for In-Context Learning
 ```
