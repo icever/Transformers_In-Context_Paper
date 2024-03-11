@@ -47,7 +47,7 @@
 
 ## Formal Approach for In-Context Learning
 
-$$\mathbb{E}_P[\ell(M(P),f(x_{\text{query}}))]≤\epsilon$$ 
+$$E_P[\ell(M(P), f(x_{\text{query}}))]≤\epsilon$$
 
 - **Function Class**: 
 
@@ -89,71 +89,7 @@ $$\mathbb{E}_P[\ell(M(P),f(x_{\text{query}}))]≤\epsilon$$
 
     The paper sets a formal criterion for successful in-context learning, measured by the model's ability to predict the output for a new query input with an average error below a certain threshold ($\epsilon$). This metric allows for a quantifiable evaluation of a model's in-context learning performance.
 
-## Training
-
-![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/fe9690c3-ffab-4c7f-b418-9da6521db889)
-
-The training process described for the Transformer model to enable it to perform in-context learning can be explained through the following points:
-
-- **Training Regime**:
-    
-    GPT-2 family architectures
-    ![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/1ad00c42-eadc-4081-b79d-d7530ba27c12)
-
-    In this research, the GPT-2 architecture is used as a starting point for training from scratch, meaning that no pre-training on language data or fine-tuning of pre-existing models is done. The focus is solely on the ability to learn function mappings in-context.
-
-- **Training Objective**: 
-
-    The training objective is to minimize the expected loss over all such prompt prefixes, using a chosen loss function, typically squared error in this case. The expected loss is calculated as the average loss over the prompt prefixes for a batch of prompts.
-
-- **Gradient Updates**: 
-
-    At each training step, the model parameters $\theta$ are updated via gradient descent to reduce the loss. Batches of random prompts are used for each update, with the Adam optimizer often chosen for its efficiency and effectiveness.
-
-- **Hyperparameters**:
-    
-    The model is trained for a significant number of steps (e.g., 500,000) with a standard batch size (e.g., 64), and uses a set learning rate (e.g., $10^{-4}$) for all function classes and models.
-
-- **Process**:
-    1. **Sampling Functions and Inputs**: The process begins by sampling random functions from a function class $F$, according to a distribution $D_F$. For each sampled function $f$, a sequence of inputs $x_1,...,x_{k+1}$ is drawn from an input distribution $D_X$. These inputs are then used to generate the corresponding outputs using the sampled function to create training prompts.
-
-    2. **Constructing Prompts**: A prompt $P$ is constructed using the input-output pairs $(x_1,f(x_1)),...,(x_{k+1},f(x_{k+1}))$. For linear functions, for instance, the inputs are drawn from an isotropic Gaussian distribution $N(0,I_d)$, and the function is defined using a weight vector $w$ also drawn from $N(0,I_d)$ such that $f(x)=w^\top{x}$.
-
-    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $x_i$ based on a set of preceding in-context examples. Specifically, for each input $ x_i $ within a prompt, the model uses the previous $i$ input-output pairs as context to predict the output of $x_{i+1}$.
-
 ## Pseudocode for In-Context Learning
-```
-Algorithm: Validate In-Context Learning Performance of Transformer
-
-/* Transformer, a model for in-context learning, evaluation phase */
-
-Input: 
-  M, a trained Transformer model
-  S, a set of sampled prompts P with corresponding true outputs
-  L, a loss function
-  ε, an error threshold
-Output: 
-  Validation that expected loss is within the threshold ε
-
-Procedure:
-1: Initialize total_loss to 0
-2: for each prompt-output pair (P, f(x_query)) in S do
-3:     x_query ← the query input from P
-4:     M_output ← M(P)                  // Get model's prediction for x_query
-5:     loss ← L(M_output, f(x_query))   // Compute loss between prediction and true output
-6:     total_loss ← total_loss + loss
-7: end for
-8: average_loss ← total_loss / |S|      // Calculate the average loss over all prompts
-9: if average_loss ≤ ε then
-10:    return "Model meets in-context learning performance criteria."
-11: else
-12:    return "Model does not meet in-context learning performance criteria."
-13: end if
-
-/* End Algorithm */
-```
-
-
 ```
 Algorithm 1: Train In-Context Learning Transformer
 
@@ -201,6 +137,39 @@ Procedure:
 /* End Algorithm */
 
 ```
+
+## Training
+
+![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/fe9690c3-ffab-4c7f-b418-9da6521db889)
+
+The training process described for the Transformer model to enable it to perform in-context learning can be explained through the following points:
+
+- **Training Regime**:
+    
+    GPT-2 family architectures
+    ![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/1ad00c42-eadc-4081-b79d-d7530ba27c12)
+
+    In this research, the GPT-2 architecture is used as a starting point for training from scratch, meaning that no pre-training on language data or fine-tuning of pre-existing models is done. The focus is solely on the ability to learn function mappings in-context.
+
+- **Training Objective**: 
+
+    The training objective is to minimize the expected loss over all such prompt prefixes, using a chosen loss function, typically squared error in this case. The expected loss is calculated as the average loss over the prompt prefixes for a batch of prompts.
+
+- **Gradient Updates**: 
+
+    At each training step, the model parameters $\theta$ are updated via gradient descent to reduce the loss. Batches of random prompts are used for each update, with the Adam optimizer often chosen for its efficiency and effectiveness.
+
+- **Hyperparameters**:
+    
+    The model is trained for a significant number of steps (e.g., 500,000) with a standard batch size (e.g., 64), and uses a set learning rate (e.g., $10^{-4}$) for all function classes and models.
+
+- **Process**:
+    1. **Sampling Functions and Inputs**: The process begins by sampling random functions from a function class $F$, according to a distribution $D_F$. For each sampled function $f$, a sequence of inputs $x_1,...,x_{k+1}$ is drawn from an input distribution $D_X$. These inputs are then used to generate the corresponding outputs using the sampled function to create training prompts.
+
+    2. **Constructing Prompts**: A prompt $P$ is constructed using the input-output pairs $(x_1,f(x_1)),...,(x_{k+1},f(x_{k+1}))$. For linear functions, for instance, the inputs are drawn from an isotropic Gaussian distribution $N(0,I_d)$, and the function is defined using a weight vector $w$ also drawn from $N(0,I_d)$ such that $f(x)=w^\top{x}$.
+
+    3. **In-Context Prediction Training**: The Transformer is trained to predict the output for a given input $x_i$ based on a set of preceding in-context examples. Specifically, for each input $ x_i $ within a prompt, the model uses the previous $i$ input-output pairs as context to predict the output of $x_{i+1}$.
+
 - **How the tasks on which in-context learning is successful**:
 
     It's not clear whether a model's ability to successfully perform a task in-context depends on having seen similar tasks or patterns during its training, or whether it relies on more general learning and reasoning abilities that are not directly tied to the specifics of the training data.
