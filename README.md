@@ -44,8 +44,6 @@
 
 - Can we train a model to in-context learn a certain function class?
 
-- What extent do Transformers develop the ability to learn new tasks from in-context examples alone?
-
 ## Formal Approach for In-Context Learning
 
 $$E_P[\ell(M(P), f(x_{\text{query}}))]≤\epsilon$$
@@ -172,13 +170,6 @@ Procedure:
 
 ```
 
-
-- **How the tasks on which in-context learning is successful**:
-
-    It's not clear whether a model's ability to successfully perform a task in-context depends on having seen similar tasks or patterns during its training, or whether it relies on more general learning and reasoning abilities that are not directly tied to the specifics of the training data.
-
-- **Theoretical Background**
-
 ## Results
 
 ### Linear Functions
@@ -222,44 +213,18 @@ The Transformer successfully approximates linear functions through in-context le
 ## Code Demo
 A section providing sample code or a demonstration of the Transformer model tackling a simple function class. This could include a Jupyter notebook or a script that one can execute to see the model in action.
 
-## Critical Analysis on Results
-This section might delve into the performance metrics of the Transformer models' in-context learning, discussing the successes and limitations demonstrated by the experimental results, and comparing these to traditional learning algorithms.
+## Implication and Future Research
+- This paper suggests that transformers inherently encode learning algorithms through their ability to perform in-context learning, with little to no additional task-specific training required. 
 
-## Implication
-The paper discusses the broader implications of the findings, such as what they suggest about the nature of in-context learning and the potential for Transformers in various applications beyond the function classes tested.
+- It also proposes exploring the inductive biases of different model families in the context of in-context learning. This includes examining whether certain function classes are more naturally learned by one model family over another.
+
+- This paper acknowledges that comprehensively grasping the in-context learning capabilities of transformers remains an open field, inviting more focused exploration in this direction.
 
 ## Resources
-A compilation of additional reading materials, datasets, and tools relevant to in-context learning and Transformers. It might include links to pre-trained models, GitHub repositories, and supplementary material.
+- [Paper Code Repository](https://github.com/dtsip/in-context-learning?tab=readme-ov-file)
+- [In Context Learning (ICL)](https://www.hopsworks.ai/dictionary/in-context-learning-icl)
+- [How does in-context learning work? A framework for understanding the differences from traditional supervised learning](https://ai.stanford.edu/blog/understanding-incontext/)
 
 ## Citation
-Proper citation format for referencing the paper, which might follow a standard format such as APA, MLA, or IEEE to ensure that readers and other researchers can reference the work correctly. 
-
-
-Can you make a few points and add explanations for my README file using the above content?
-
-
-
-To determine if Transformers can predict outputs that meet the inequality condition, we typically follow these steps:
-
-1. **Training the Model**: Before inference, the model is trained on a range of input-output pairs that reflect the diversity of the function class $F$. This training does not necessarily need to cover every possible function in $F$ but should be representative enough to enable the model to generalize.
-
-2. **Creating the Prompt**: At inference time, a prompt is created that includes in-context examples. These are input-output pairs sampled from the function class $F$, along with a new query input. The model uses this prompt to infer the function that generated the in-context examples.
-
-3. **Model Prediction**: Given the prompt, the model makes a prediction $ M(P) \) for the output corresponding to the query input \( x_{\text{query}} \).
-
-4. **Calculating the Loss**: The predicted output is compared to the true output \( f(x_{\text{query}}) \) using a predefined loss function \( \ell \). The loss function quantifies the error between the model's prediction and the true output.
-
-5. **Estimating the Expected Loss**: The average or expected loss is estimated by averaging the losses over a large number of prompts, each with a different set of in-context examples and query inputs, sampled from the distributions \( D_F \) and \( D_X \).
-
-6. **Evaluating Against the Threshold \( \epsilon \)**: If the expected loss is less than or equal to the threshold \( \epsilon \), then the model is said to meet the condition for in-context learning of the function class \(F\).
-
-7. **Statistical Significance**: To ensure that the results are not due to chance, statistical tests can be applied to determine the significance of the results. Tools from statistical learning theory, such as concentration inequalities (like Hoeffding's inequality), can be used to provide confidence that the observed performance is a true reflection of the model's capabilities.
-
-This process would be described in detail in the methodology section of the paper or technical documentation and would be implemented in practice to test the model's in-context learning performance.
-
-
-
-Limitation
-
-Not talk about other function class.
-How to combine all function classes in a model
+Shivam Garg, Dimitris Tsipras, Percy Liang, Gregory Valiant (2022).
+ [What Can Transformers Learn In-Context? A Case Study of Simple Function Classes](https://arxiv.org/abs/2208.01066). arXiv preprint arXiv:2208.01066.
