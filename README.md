@@ -4,7 +4,7 @@
 
 
 <details>
-<summary>Q1</summary>
+<summary>Q1: What happens when we feed ChatGPT prompts with text and input-output pairs?</summary>
 
 ![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/9bc8d4f6-8f78-42c4-95a8-adc24db5904d)    
 
@@ -17,7 +17,7 @@
 </details>    
 
 <details>
-<summary>Q2</summary>  
+<summary>Q2: What kind of answers would ChatGPT come up with for these inputs? </summary>  
 
 ![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/7d8aafa4-61ab-440c-b8ce-71d561f7c31b)    
 
@@ -54,18 +54,22 @@ $$E_P[\ell(M(P), f(x_{\text{query}}))]≤\epsilon$$
 
     Using 20-dimentional inputs $\mathbf{x}$, we will discuss the 4 function  classes as follows.
 
-    - **Linear Function**
+    - **Linear Function**:
 
-        - $f(\mathbf{x})=w_1x_1+w_2x_2+...+w_{20}x_{20}+b$ (21 parameters)
-    - **3-Sparse Linear Function**
+        - $f(\mathbf{x})=w_1x_1+w_2x_2+...+w_{20}x_{20}+b$ 
+        - 21 parameters
 
-        - $f(\mathbf{x})=w_2x_2+w_5x_5+w_{20}x_{20}$ (3 parameters)
+    - **3-Sparse Linear Function**:
 
-    - **Two-Layer ReLU Neural Networks with 100 Hidden Units**
+        - $f(\mathbf{x})=w_2x_2+w_5x_5+w_{20}x_{20}$ 
+        - 3 parameters
 
-        - $f(\mathbf{x})=\mathbf{W}_2^\top(\text{ReLU}(\mathbf{W}_1\mathbf{x}+\mathbf{b}_1))+b_2$ (Assuming a single output unit, 2201 parameters - 20*100 + 100 + 100 +1)
+    - **Two-Layer ReLU Neural Networks with 100 Hidden Units**:
 
-    - **Decision Tree of Depth 4**
+        - $f(\mathbf{x})=\mathbf{W}_2^\top(\text{ReLU}(\mathbf{W}_1\mathbf{x}+\mathbf{b}_1))+b_2$ 
+        - 2201 parameters - 20*100 + 100 + 100 +1, Assuming a single output unit
+
+    - **Decision Tree of Depth 4**:
         - $f(\mathbf{x})$ is a series of if-else conditions upto 15 decisions.
         - Example:
             - If $x_1>\text{threshold}_1$:
@@ -211,14 +215,22 @@ The Transformer successfully approximates linear functions through in-context le
 ![image](https://github.com/icever/Transformers_In-Context_Paper/assets/16262929/7fd20b91-4b14-47c9-9ddd-c4cf8e88eeff)    
 
 ## Code Demo
-A section providing sample code or a demonstration of the Transformer model tackling a simple function class. This could include a Jupyter notebook or a script that one can execute to see the model in action.
+[Code Demo Notebook](https://github.com/icever/Transformers_In-Context_Paper/blob/main/demo.ipynb)
 
 ## Implication and Future Research
+
+<details>
+<summary>Q3: With the in-context learning capability of transformers, what types of work can we undertake, and what areas require further research?
+
+</summary>
+
 - This paper suggests that transformers inherently encode learning algorithms through their ability to perform in-context learning, with little to no additional task-specific training required. 
 
 - It also proposes exploring the inductive biases of different model families in the context of in-context learning. This includes examining whether certain function classes are more naturally learned by one model family over another.
 
 - This paper acknowledges that comprehensively grasping the in-context learning capabilities of transformers remains an open field, inviting more focused exploration in this direction.
+
+</details>    
 
 ## Resources
 - [Paper Code Repository](https://github.com/dtsip/in-context-learning?tab=readme-ov-file)
