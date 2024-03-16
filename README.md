@@ -40,7 +40,7 @@
 
     The core of in-context learning involves leveraging input-output pairs provided within the prompt. These pairs exemplify the task at hand, allowing the model to infer the underlying pattern or function to apply to a new input query.
 
-## Problems 
+## Problem
 
 - Can we train a model to in-context learn a certain function class?
 
